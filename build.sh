@@ -29,6 +29,7 @@ echo "building ectrans with arch: " $arch
 source $arch/env.sh #load compiler x mpi specific modules
 source $arch/../env.sh #load modules which are shared regardless of compiler or mpi implementation
 rm -r build; mkdir build; cd build
+echo "arch=$arch" > .current_arch #so the slurm script knows which env to load
 
 #cmake .. -Dfiat_ROOT="$fiat_root/build"
 cmake .. -Dfiat_ROOT="../$fiat_root/build"

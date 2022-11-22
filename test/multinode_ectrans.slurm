@@ -1,20 +1,21 @@
 #! /bin/bash
 #SBATCH --job-name=ectrans-benchmark
 #SBATCH --qos=np
-#SBATCH --time=0:20:00
-#SBATCH --nodes=128
+#SBATCH --time=0:5:00
+#SBATCH --nodes=1
 #SBATCH --output=ectrans_multinode.%j.out
 #SBATCH --error=ectrans_multinode.%j.out
 
 #setup enviorment by loading modules and setting constants
-source /ec/res4/hpcperm/naco/moria/ectrans/env.sh
+source /ec/res4/hpcperm/naco/moria/ectrans/build/.current_arch #read what current arch ectrans was built with, stored in $arch
+source "/ec/res4/hpcperm/naco/moria/ectrans/$arch/env.sh"
 CPUS_PER_NUMA_REGION=16
 CPUS_PER_SOCKET=64
 CPUS_PER_NODE=128
 #NUM_THREADS=($CPUS_PER_NUMA_REGION $CPUS_PER_SOCKET $CPUS_PER_NODE)
 NUM_THREADS=($CPUS_PER_NODE)
 #NUM_NODES=(64 96 128)
-NUM_NODES=(80 96 112 128)
+NUM_NODES=(1)
 
 #set some runtime parameters
 iterations=3
