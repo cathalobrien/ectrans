@@ -5,19 +5,19 @@
 root=/ec/res4/hpcperm/naco/moria/ectrans
 cd $root
 
-ARCH_FILES=("atos/gnu_openmpi" "atos/intel_intelmpi")
+ARCH_FILES=("atos/intel_hpcx" "atos/gnu_hpcx")
 for arch in "${ARCH_FILES[@]}"; do
 
 	echo "building ectrans with the following profile: $arch"
+
+	#load required modules
+	module purge
+	source $root/arch/$arch/env.sh
 
 	#building the fiat depenancy with the correct arch
 	fiat_root=$root/../deps/fiat
 	bash $fiat_root/build.sh -a $arch
     	cd $root #move back to ectrans once done
-
-	#load required modules
-	module purge
-	source $root/arch/$arch/env.sh
 
 	#generate a unique subdir based on arch and flag combo
 	subdir=test/build/$arch
