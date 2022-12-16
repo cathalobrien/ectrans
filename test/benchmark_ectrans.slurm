@@ -1,8 +1,8 @@
 #! /bin/bash
 #SBATCH --job-name=ectrans-bm
 #SBATCH --qos=np
-#SBATCH --nodes=2
 #SBATCH --time=0:10:00
+#SBATCH --nodes=2 #NOTE: you must manually edit this line so that it lists the largest number of nodes you plan to run over
 #SBATCH --output=ectrans.%j.out
 #SBATCH --error=ectrans.%j.out
 
