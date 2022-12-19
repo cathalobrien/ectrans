@@ -31,7 +31,7 @@ echo "Benchmarking the following number of OpenMP threads per MPI task: ${THREAD
 echo "Benchmarking the following float precisions: ${PRECISIONS[*]}"
 total_runs=$((${#ARCH_FILES[@]} * ${#NUM_NODES[@]} * ${#NUM_THREADS[@]} * ${#NPROMA_SIZES[@]} * ${#THREAD_TASK_RATIO[@]} * ${#PRECISIONS[@]} * $iterations))
 echo "Performing each configuration $iterations times, for a total of $total_runs runs"
-echo "Each ectrans run uses a truncation of $truncation and a frequency of $freq"
+echo "Each ectrans run uses a truncation of $truncation and $fields fields"
 
 #launch the runs
 for arch in "${ARCH_FILES[@]}"; do
@@ -50,10 +50,10 @@ for arch in "${ARCH_FILES[@]}"; do
 						binary="ectrans-benchmark-$p"
 						for ((i = 0 ; i < $iterations ; i++)); do
 							echo "profile $arch node_count $node_count thread_count_per_node $thread_count ntasks_per_node $ntasks_per_node " \
-								"threads_per_task $threads_per_task precision $p NPROMA $nproma truncation $truncation frequency $freq"
+								"threads_per_task $threads_per_task precision $p NPROMA $nproma truncation $truncation frequency $fields"
 							srun --hint=nomultithread --cpus-per-task=$threads_per_task --nodes=$node_count \
 								--ntasks-per-node=$ntasks_per_node env OMP_NUM_THREADS=$threads_per_task env OMP_PLACES=cores \
-								bin/$binary -t $truncation -f $freq --nproma $nproma
+								bin/$binary -t $truncation -f $fields --nproma $nproma
 						done
 					done
 				done
